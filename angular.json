@@ -6,6 +6,17 @@
     "analytics": false
   },
   "newProjectRoot": "projects",
+  "schematics": {
+    "@schematics/angular:component": {
+      "type": "component"
+    },
+    "@schematics/angular:service": {
+      "type": "service"
+    },
+    "@schematics/angular:directive": {
+      "type": "directive"
+    }
+  },
   "projects": {
     "survey-builder": {
       "projectType": "application",
@@ -29,7 +40,11 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/material-theme.scss", "src/styles.scss"]
+            "styles": [
+              "src/material-theme.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.scss"
+            ]
           },
           "configurations": {
             "production": {
