@@ -1,27 +1,76 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Admin User",
       "email": "admin@test.com",
       "password": "123456",
       "role": "ADMIN"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Normal User",
       "email": "user@test.com",
       "password": "123456",
       "role": "USER"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Guest User",
       "email": "guest@test.com",
       "password": "123456",
       "role": "GUEST"
     }
   ],
-  "surveys": [],
-  "responses": []
+  "surveys": [
+    {
+      "title": "Test Survay",
+      "description": "Test report data to handle the report",
+      "questions": [
+        {
+          "title": "Ques1",
+          "type": "TEXT",
+          "required": true,
+          "options": []
+        },
+        {
+          "title": "Ques2",
+          "type": "MULTIPLE",
+          "required": true,
+          "options": [
+            "Angular",
+            "React"
+          ]
+        },
+        {
+          "title": "Ques3",
+          "type": "CHECKBOX",
+          "required": false,
+          "options": [
+            "asd",
+            "fgh"
+          ]
+        }
+      ],
+      "id": "BfoBC6byRvE"
+    },
+    {
+      "title": "Q2",
+      "description": "Q2",
+      "questions": [
+        {
+          "title": "qwe",
+          "type": "MULTIPLE",
+          "required": false,
+          "options": [
+            "asd",
+            "asd"
+          ]
+        }
+      ],
+      "id": "DPGnCIrcPbo"
+    }
+  ],
+  "responses": [],
+  "$schema": "./node_modules/json-server/schema.json"
 }

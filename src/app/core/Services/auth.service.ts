@@ -45,7 +45,6 @@ export class AuthService {
 
   logout(): void {
     this.storage.clear();
-
     this.currentUser.set(null);
   }
 

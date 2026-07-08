@@ -23,4 +23,9 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./features/survey-builder/survey-builder-module').then((m) => m.SurveyBuilderModule),
   },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
 ];

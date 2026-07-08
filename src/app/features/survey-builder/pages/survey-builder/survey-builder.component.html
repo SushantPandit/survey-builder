@@ -1,1 +1,76 @@
-<p>survey-builder works!</p>
+<form [formGroup]="surveyForm">
+  <mat-form-field appearance="outline">
+    <mat-label>Survey Title</mat-label>
+    <input matInput formControlName="title" />
+  </mat-form-field>
+
+  <br />
+
+  <mat-form-field appearance="outline">
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="description"> </textarea>
+  </mat-form-field>
+
+  <br />
+
+  <button mat-raised-button color="primary" type="button" (click)="addQuestion()">
+    Add Question
+  </button>
+  <br />
+
+  <div formArrayName="questions" class="questions-grid">
+    <div *ngFor="let question of questions.controls; let i = index" [formGroupName]="i" class="question-card">
+      <mat-card>
+        <mat-form-field appearance="outline">
+          <mat-label> Question Title </mat-label>
+          <input matInput formControlName="title" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label> Type </mat-label>
+          <mat-select formControlName="type" (selectionChange)="onQuestionTypeChange(i)">
+            <mat-option value="TEXT"> Text </mat-option>
+            <mat-option value="MULTIPLE"> Multiple Choice </mat-option>
+            <mat-option value="CHECKBOX"> Checkbox </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="text-danger alert alert-danger" *ngIf="question.errors?.['minimumOptions']">
+          At least two options are required.
+        </div>
+        @if (question.get('type')?.value === 'MULTIPLE'
+        ||question.get('type')?.value === 'CHECKBOX') {
+        <div formArrayName="options">
+
+          <div *ngFor="let option of getOptions(i).controls; let j=index">
+            <input matInput [formControlName]="j" placeholder="Option">
+            <button type="button" (click)="removeOption(i,j)">
+              Remove
+            </button>
+          </div>
+          <button type="button" (click)="addOption(i)">
+            Add Option</button>
+        </div>
+        }
+
+        <mat-checkbox formControlName="required"> Required </mat-checkbox>
+        <button class="btn btn-primary" (click)="removeQuestion(i)" type="button">
+          Remove
+        </button>
+      </mat-card>
+    </div>
+  </div>
+  <br />
+
+  <button class="btn btn-primary" type="button" (click)="saveSurvey()"> Save Survey </button>
+  <br />
+  <!-- <p>Total Questions : {{ questions.length }}</p> -->
+</form>
+
+@if(surveys.length > 0) {
+<h2>Saved Surveys</h2>
+<ul>
+  <li *ngFor="let survey of surveys">
+    <strong>{{ survey.title }}</strong> - {{ survey.description }}
+    <br> total Questions: {{ survey.questions.length }}
+  </li>
+</ul>
+}

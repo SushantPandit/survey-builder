@@ -1,7 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { SurveyBuilderComponent } from './pages/survey-builder/survey-builder.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: '',
+    component: SurveyBuilderComponent,
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

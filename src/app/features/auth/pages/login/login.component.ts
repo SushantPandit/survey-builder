@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../../core/Services/auth.service';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { TosterService } from '../../../../core/Services/toster.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +14,7 @@ export class LoginComponent {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
-  private snackBar = inject(MatSnackBar);
+  private snackBar = inject(TosterService);
 
   constructor() {}
 
@@ -24,27 +24,25 @@ export class LoginComponent {
   });
 
   login() {
-    let formdata = this.loginForm.value;
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
-
+      this.snackBar.openSnackBar('Email or password is null', 'Close');
       return;
     }
 
-    if(!this.loginForm.value.email || !this.loginForm.value.password) {
+    if (!this.loginForm.value.email || !this.loginForm.value.password) {
+      this.snackBar.openSnackBar('Email or password is null', 'Close');
       throw new Error('Email or password is null');
-    }else {
-    this.authService.login(this.loginForm.getRawValue())
-      .subscribe({
+    } else {
+      this.authService.login(this.loginForm.getRawValue()).subscribe({
         next: () => {
           this.router.navigate(['/survey']);
         },
         error: (err) => {
-          this.snackBar.open(err.message, 'Close');
+          this.snackBar.openSnackBar(err.message, 'Close');
         },
       });
     }
-
   }
 
   // onSubmit(): void {
