@@ -1,9 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, signal } from '@angular/core';
 import { FormArray, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
-import { QuestionType } from '../../../../core/Models/question.model';
+import { Question, QuestionType } from '../../../../core/Models/question.model';
 import { minimumOptionsValidator } from '../../../../shared/Validators/minimum-options.validator';
 import { SurveyService } from '../../../../core/Services/survey.service';
 import { Survey } from '../../../../core/Models/survey.model';
+import { SurveyStore } from '../../../../core/Services/survey.store';
 
 @Component({
   selector: 'app-survey-builder',
@@ -14,8 +15,11 @@ import { Survey } from '../../../../core/Models/survey.model';
 export class SurveyBuilderComponent implements OnInit {
   private fb = inject(NonNullableFormBuilder);
   private surveyService = inject(SurveyService);
+  private surveyStore = inject(SurveyStore);
+  editingSurveyId: number | null = null;
 
-  surveys: Survey[] = [];
+  readonly surveys = this.surveyStore.surveys;
+  readonly totalSurveys = this.surveyStore.totalSurveys;
 
   //creating form for survey builder
   surveyForm = this.fb.group({
@@ -32,12 +36,12 @@ export class SurveyBuilderComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.loadSurveys();
+    this.surveyStore.loadSurveys();
   }
 
   //nested form group for questions and options
   // creating method to create question form group
-  private createQuestion(): FormGroup {
+  private createQuestion(question?: Question): FormGroup {
     return this.fb.group({
       title: ['', Validators.required],
       type: [QuestionType.TEXT],
@@ -95,28 +99,67 @@ export class SurveyBuilderComponent implements OnInit {
       return;
     }
 
-    this.surveyService.create(this.surveyForm.getRawValue() as Survey).subscribe({
-      next: (survey) => {
-        alert('Survey Saved Successfully');
-        this.loadSurveys();
-        this.surveyForm.reset();
-        this.questions.clear();
-      },
+    const surveyData: Survey = this.surveyForm.getRawValue() as Survey;
 
-      error: (error) => {
+    if (this.editingSurveyId) {
+      this.surveyService.update(
+        this.editingSurveyId,
+        surveyData
+      ).subscribe({
+        next: () => {
+          alert('Survey Updated');
+          this.resetForm();
+        }
+      });
+    } else {
+      this.surveyService.create(
+        surveyData
+      ).subscribe({
+        next: () => {
+          alert('Survey Created');
+          this.resetForm();
+        }
+      });
 
-        console.error(error);
-
-      }
-
-    });
+    }
 
   }
+  resetForm() {
+    this.surveyForm.reset();
+    this.questions.clear();
+    this.editingSurveyId = null;
+    this.surveyStore.loadSurveys();
+  }
 
-  loadSurveys(): void {
-    this.surveyService.getAll().subscribe({
-      next: (response) => {
-        this.surveys = response;
+  editSurvey(survey: Survey): void {
+    this.editingSurveyId = survey.id!;
+    this.questions.clear();
+    survey.questions.forEach(question => {
+      const questionGroup = this.createQuestion();
+      questionGroup.patchValue({
+        title: question.title,
+        type: question.type,
+        required: question.required
+      });
+      const options = questionGroup.get('options') as FormArray;
+      question.options.forEach(option => {
+        options.push(this.fb.control(option));
+      });
+      this.questions.push(questionGroup);
+    });
+    this.surveyForm.patchValue({
+      title: survey.title,
+      description: survey.description
+    });
+  }
+
+  deleteSurvey(id: number): void {
+    if (!confirm('Delete this survey?')) {
+      return;
+    }
+    this.surveyService.delete(id).subscribe({
+      next: () => {
+        this.surveyStore.loadSurveys();
       },
       error: (error) => {
         console.error(error);

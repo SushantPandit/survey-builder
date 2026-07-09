@@ -1,0 +1,34 @@
+<mat-card *ngFor="let survey of surveys" class="mb-3">
+
+    <mat-card-title>
+        {{ survey.title }}
+    </mat-card-title>
+
+    <mat-card-content>
+
+        {{ survey.description }}
+
+        <br>
+
+        Questions:
+        {{ survey.questions.length }}
+
+    </mat-card-content>
+
+    <mat-card-actions>
+
+        <button mat-raised-button color="primary" (click)="onEdit(survey)">
+
+            Edit
+
+        </button>
+
+        <button mat-raised-button color="warn" (click)="onDelete(survey.id!)">
+
+            Delete
+
+        </button>
+
+    </mat-card-actions>
+
+</mat-card>

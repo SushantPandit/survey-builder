@@ -1,5 +1,73 @@
-<form [formGroup]="surveyForm">
-  <mat-form-field appearance="outline">
+<div class="container-fluid">
+  <button class="btn btn-success mb-5" routerLink="/dashboard">
+    Dashboard
+  </button>
+  <form [formGroup]="surveyForm">
+    <!-- trying with Bootstarap -->
+    <div class="form-group mb-1">
+      <label>Survey Title</label>
+      <input class="form-control" formControlName="title" />
+    </div>
+    <div class="form-group mb-1">
+      <label>Description</label>
+      <textarea class="form-control" formControlName="description"></textarea>
+    </div>
+    <div class="form-group mb-1">
+      <button class="btn btn-success" type="button" (click)="addQuestion()">
+        Add Question
+      </button>
+    </div>
+    <div class="questions-grid mb-1" formArrayName="questions">
+      <div *ngFor="let question of questions.controls; let i = index" [formGroupName]="i" class="question-card">
+        <div class="card">
+          <div class="card-body">
+            <div class=" form-group">
+              <label>Survey Title</label>
+              <input class="form-control" formControlName="title" />
+            </div>
+            <div class="form-group mb-3">
+              <label>Type</label>
+              <select class="form-control" id="" formControlName="type" (change)="onQuestionTypeChange(i)">
+                <option value="TEXT"> Text </option>
+                <option value="MULTIPLE"> Multiple Choice </option>
+                <option value="CHECKBOX"> Checkbox </option>
+              </select>
+            </div>
+            <div class="text-danger" *ngIf="question.errors?.['minimumOptions']">
+              At least two options are required.
+            </div>
+
+            @if (question.get('type')?.value === 'MULTIPLE'
+            ||question.get('type')?.value === 'CHECKBOX') {
+            <div formArrayName="options">
+              <div class="input-group mb-1" *ngFor="let option of getOptions(i).controls; let j=index">
+                <input class="form-control" [formControlName]="j" placeholder="Option">
+                <button class="btn btn-secondary close " type="button" (click)="removeOption(i,j)">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+
+              <button class="btn btn btn-secondary" type="button" (click)="addOption(i)">
+                Add Option</button>
+            </div>
+            }
+
+            <div class="form-check mb-1">
+              <input class="form-check-input" type="checkbox" formControlName="required">
+              <label class="form-check-label" for="defaultCheck1">
+                Required
+              </label>
+            </div>
+            <button class="btn btn-primary col-12 mb-1" (click)="removeQuestion(i)" type="button">
+              Remove
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- <mat-form-field appearance="outline">
     <mat-label>Survey Title</mat-label>
     <input matInput formControlName="title" />
   </mat-form-field>
@@ -11,17 +79,14 @@
     <textarea matInput formControlName="description"> </textarea>
   </mat-form-field>
 
-  <br />
+  <br /> -->
 
-  <button mat-raised-button color="primary" type="button" (click)="addQuestion()">
-    Add Question
-  </button>
-  <br />
-
-  <div formArrayName="questions" class="questions-grid">
+    <br />
+    <br />
+    <!-- <div formArrayName="questions" class="questions-grid">
     <div *ngFor="let question of questions.controls; let i = index" [formGroupName]="i" class="question-card">
-      <mat-card>
-        <mat-form-field appearance="outline">
+      <mat-card> -->
+    <!-- <mat-form-field appearance="outline">
           <mat-label> Question Title </mat-label>
           <input matInput formControlName="title" />
         </mat-form-field>
@@ -32,45 +97,42 @@
             <mat-option value="MULTIPLE"> Multiple Choice </mat-option>
             <mat-option value="CHECKBOX"> Checkbox </mat-option>
           </mat-select>
-        </mat-form-field>
-        <div class="text-danger alert alert-danger" *ngIf="question.errors?.['minimumOptions']">
+        </mat-form-field> -->
+    <!-- <div class="text-danger alert alert-danger" *ngIf="question.errors?.['minimumOptions']">
           At least two options are required.
-        </div>
-        @if (question.get('type')?.value === 'MULTIPLE'
+        </div> -->
+    <!-- @if (question.get('type')?.value === 'MULTIPLE'
         ||question.get('type')?.value === 'CHECKBOX') {
         <div formArrayName="options">
 
-          <div *ngFor="let option of getOptions(i).controls; let j=index">
-            <input matInput [formControlName]="j" placeholder="Option">
-            <button type="button" (click)="removeOption(i,j)">
+          <div class="input-group mb-1" *ngFor="let option of getOptions(i).controls; let j=index">
+            <input class="form-control" [formControlName]="j" placeholder="Option">
+            <button class="btn btn-secondary " type="button" (click)="removeOption(i,j)">
               Remove
             </button>
           </div>
-          <button type="button" (click)="addOption(i)">
+          <button class="btn btn btn-secondary" type="button" (click)="addOption(i)">
             Add Option</button>
         </div>
-        }
+        } -->
 
-        <mat-checkbox formControlName="required"> Required </mat-checkbox>
+    <!-- <mat-checkbox formControlName="required"> Required </mat-checkbox>
         <button class="btn btn-primary" (click)="removeQuestion(i)" type="button">
           Remove
         </button>
       </mat-card>
     </div>
-  </div>
-  <br />
+  </div> -->
+    <br />
+    <button class="btn btn-primary " type="button" (click)="saveSurvey()">
+      {{ editingSurveyId ? 'Update Survey' : 'Save Survey' }}
+    </button>
+    <br />
+    <!-- <p>Total Questions : {{ questions.length }}</p> -->
+  </form>
 
-  <button class="btn btn-primary" type="button" (click)="saveSurvey()"> Save Survey </button>
-  <br />
-  <!-- <p>Total Questions : {{ questions.length }}</p> -->
-</form>
-
-@if(surveys.length > 0) {
-<h2>Saved Surveys</h2>
-<ul>
-  <li *ngFor="let survey of surveys">
-    <strong>{{ survey.title }}</strong> - {{ survey.description }}
-    <br> total Questions: {{ survey.questions.length }}
-  </li>
-</ul>
-}
+  @if(surveys().length > 0 && !this.editingSurveyId) {
+  <app-survey-list [surveys]="surveys()" (edit)="editSurvey($event)" (delete)="deleteSurvey($event)">
+  </app-survey-list>
+  }
+</div>

@@ -1,1 +1,7 @@
-<p>dashboard works!</p>
+<div class="container-fluid">
+    <button class="btn btn-success mb-5" routerLink="/survey">
+        Survay-Buider
+    </button>
+    <app-bar-chart [data]="chartData()"></app-bar-chart>
+    <app-pie-chart [data]="piaChartData()"></app-pie-chart>
+</div>
