@@ -1,0 +1,91 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="mb-1">Survey Builder</h2>
+      <p class="text-muted mb-0">Create Surveys</p>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-outline-success m-2" routerLink="/dashboard">Go to Dashboard</button>
+      <button class="btn btn-outline-danger" routerLink="/login" (click)="surveyService.logout()">Logout</button>
+    </div>
+  </div>
+
+  <form [formGroup]="surveyForm">
+    <!-- trying with Bootstarap -->
+    <div class="group-width">
+      <div class="form-group mb-1 col-12">
+        <label>Survey Title</label>
+        <input class="form-control" formControlName="title" />
+      </div>
+      <div class="form-group mb-1 col-12">
+        <label>Description</label>
+        <textarea class="form-control" formControlName="description"></textarea>
+      </div>
+      <div class="form-group mb-1 col-12">
+        <button class="btn btn-success" type="button" (click)="addQuestion()">
+          Add Question
+        </button>
+      </div>
+    </div>
+    <div class="questions-grid mb-1" formArrayName="questions">
+      <div *ngFor="let question of questions.controls; let i = index" [formGroupName]="i" class="question-card">
+        <div class="card">
+          <div class="card-body">
+            <div class=" form-group">
+              <label>Survey Title</label>
+              <input class="form-control" formControlName="title" />
+            </div>
+            <div class="form-group mb-3">
+              <label>Type</label>
+              <select class="form-control" id="" formControlName="type" (change)="onQuestionTypeChange(i)">
+                <option value="TEXT"> Text </option>
+                <option value="MULTIPLE"> Multiple Choice </option>
+                <option value="CHECKBOX"> Checkbox </option>
+              </select>
+            </div>
+            <div class="text-danger" *ngIf="question.errors?.['minimumOptions']">
+              At least two options are required.
+            </div>
+
+            @if (question.get('type')?.value === 'MULTIPLE'
+            ||question.get('type')?.value === 'CHECKBOX') {
+            <div formArrayName="options">
+              <div class="input-group mb-1" *ngFor="let option of getOptions(i).controls; let j=index">
+                <input class="form-control" [formControlName]="j" placeholder="Option">
+                <button class="btn btn-secondary close " type="button" (click)="removeOption(i,j)">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+
+              <button class="btn btn btn-secondary" type="button" (click)="addOption(i)">
+                Add Option</button>
+            </div>
+            }
+
+            <div class="form-check mb-1">
+              <input class="form-check-input" type="checkbox" formControlName="required">
+              <label class="form-check-label" for="defaultCheck1">
+                Required
+              </label>
+            </div>
+            <button class="btn btn-primary col-12 mb-1" (click)="removeQuestion(i)" type="button">
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br />
+    <br />
+    <button class="btn btn-primary " type="button" (click)="saveSurvey()">
+      {{ editingSurveyId ? 'Update Survey' : 'Save Survey' }}
+    </button>
+    <br />
+  </form>
+
+  @if(surveys().length > 0 && !this.editingSurveyId) {
+  <app-survey-list [surveys]="surveys()" (edit)="editSurvey($event)" (delete)="deleteSurvey($event)">
+  </app-survey-list>
+  }
+</div>

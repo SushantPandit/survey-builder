@@ -1,0 +1,94 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Admin User",
+      "email": "admin@test.com",
+      "password": "123456",
+      "role": "ADMIN"
+    },
+    {
+      "id": "2",
+      "name": "Normal User",
+      "email": "user@test.com",
+      "password": "123456",
+      "role": "USER"
+    },
+    {
+      "id": "3",
+      "name": "Guest User",
+      "email": "guest@test.com",
+      "password": "123456",
+      "role": "GUEST"
+    }
+  ],
+  "surveys": [
+    {
+      "title": "Test Survay",
+      "description": "Test report data to handle the report",
+      "questions": [
+        {
+          "title": "Ques1",
+          "type": "MULTIPLE",
+          "required": true,
+          "options": [
+            "ASDG",
+            "WERT"
+          ]
+        },
+        {
+          "title": "Ques2",
+          "type": "MULTIPLE",
+          "required": true,
+          "options": [
+            "Angular",
+            "React"
+          ]
+        },
+        {
+          "title": "Ques3",
+          "type": "CHECKBOX",
+          "required": false,
+          "options": [
+            "asd",
+            "fgh hh"
+          ]
+        },
+        {
+          "title": "test Question for advance ",
+          "type": "TEXT",
+          "required": true,
+          "options": []
+        }
+      ],
+      "id": "BfoBC6byRvE"
+    },
+    {
+      "title": "jhuyt",
+      "description": "bghfdrt",
+      "questions": [
+        {
+          "title": "vg1",
+          "type": "TEXT",
+          "required": true,
+          "options": []
+        },
+        {
+          "title": "kli",
+          "type": "TEXT",
+          "required": false,
+          "options": []
+        },
+        {
+          "title": "v4",
+          "type": "TEXT",
+          "required": false,
+          "options": []
+        }
+      ],
+      "id": "6wyUjPxF_8E"
+    }
+  ],
+  "responses": [],
+  "$schema": "./node_modules/json-server/schema.json"
+}

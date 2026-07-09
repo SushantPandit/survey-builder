@@ -1,0 +1,13 @@
+.cards-panal {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+
+    .card {
+        max-width: 400px;
+        width: 300px;
+        background-color: #e3e2e6;
+        box-shadow: 0 2px 6px rgba(23, 28, 36, 0.08);
+        transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+}
