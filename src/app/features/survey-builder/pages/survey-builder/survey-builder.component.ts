@@ -1,17 +1,26 @@
 import { Component, ElementRef, inject, OnInit, signal } from '@angular/core';
-import { FormArray, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Question, QuestionType } from '../../../../core/Models/question.model';
 import { minimumOptionsValidator } from '../../../../shared/Validators/minimum-options.validator';
 import { questionValidator } from '../../../../shared/Validators/question.validator';
 import { SurveyService } from '../../../../core/Services/survey.service';
 import { Survey } from '../../../../core/Models/survey.model';
 import { SurveyStore } from '../../../../core/Services/survey.store';
+import { SurveyListComponent } from '../../components/survey-list/survey-list.component';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-survey-builder',
+  imports: [
+    SurveyListComponent,
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+  ],
   templateUrl: './survey-builder.component.html',
   styleUrl: './survey-builder.component.scss',
-  standalone: false,
+  // standalone: false,
 })
 export class SurveyBuilderComponent implements OnInit {
   private fb = inject(NonNullableFormBuilder);

@@ -10,8 +10,7 @@ describe('SurveyListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SurveyListComponent],
-      imports: [MatCardModule, MatButtonModule],
+      imports: [SurveyListComponent, MatCardModule, MatButtonModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SurveyListComponent);

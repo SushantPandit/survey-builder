@@ -4,9 +4,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 
 import { SurveyBuilderComponent } from './survey-builder.component';
-import { SurveyListComponent } from '../../components/survey-list/survey-list.component';
-import { SurveyService } from '../../../../core/Services/survey.service';
 import { SurveyStore } from '../../../../core/Services/survey.store';
+import { SurveyService } from '../../../../core/Services/survey.service';
 
 describe('SurveyBuilderComponent', () => {
   let component: SurveyBuilderComponent;
@@ -14,8 +13,7 @@ describe('SurveyBuilderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SurveyBuilderComponent, SurveyListComponent],
-      imports: [ReactiveFormsModule, RouterTestingModule],
+      imports: [SurveyBuilderComponent, ReactiveFormsModule, RouterTestingModule],
       providers: [
         {
           provide: SurveyService,

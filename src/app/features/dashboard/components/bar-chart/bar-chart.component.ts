@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, Input, input, OnChanges, SimpleChanges } from '@angular/core';
-import { Survey } from '../../../../core/Models/survey.model';
 import * as d3 from 'd3';
 
 export interface BarChartData {
@@ -9,7 +8,7 @@ export interface BarChartData {
 
 @Component({
   selector: 'app-bar-chart',
-  standalone: false,
+  imports: [],
   templateUrl: './bar-chart.component.html',
   styleUrl: './bar-chart.component.scss',
 })

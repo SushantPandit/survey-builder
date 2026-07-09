@@ -18,14 +18,14 @@
     </mat-card-actions>
 </mat-card> -->
 <div class="cards-panal">
-
-    <div class="card m-3" *ngFor="let survey of surveys">
+    @for(survey of surveys;track survey){
+    <div class="card m-3">
         <div class="card-body">
             <div class="card-title">
                 <h5> {{ survey.title }}</h5>
             </div>
             <div class="card-body mb-1">
-               Description : {{ survey.description }}
+                Description : {{ survey.description }}
             </div>
             <div class="card-body mb-1">
                 Questions : {{survey.questions.length}}
@@ -40,4 +40,5 @@
             </div>
         </div>
     </div>
+    }
 </div>

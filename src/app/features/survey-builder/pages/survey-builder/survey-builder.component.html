@@ -28,7 +28,8 @@
       </div>
     </div>
     <div class="questions-grid mb-1" formArrayName="questions">
-      <div *ngFor="let question of questions.controls; let i = index" [formGroupName]="i" class="question-card">
+      @for(question of questions.controls;track question; let i = $index){
+      <div [formGroupName]="i" class="question-card">
         <div class="card">
           <div class="card-body">
             <div class=" form-group">
@@ -43,20 +44,22 @@
                 <option value="CHECKBOX"> Checkbox </option>
               </select>
             </div>
-            <div class="text-danger" *ngIf="question.errors?.['minimumOptions']">
+            @if(question.errors?.['minimumOptions']){
+            <div class="text-danger">
               At least two options are required.
             </div>
-
+            }
             @if (question.get('type')?.value === 'MULTIPLE'
             ||question.get('type')?.value === 'CHECKBOX') {
             <div formArrayName="options">
-              <div class="input-group mb-1" *ngFor="let option of getOptions(i).controls; let j=index">
+              @for(option of getOptions(i).controls; track option;let j = $index){
+              <div class="input-group mb-1">
                 <input class="form-control" [formControlName]="j" placeholder="Option">
-                <button class="btn btn-secondary close " type="button" (click)="removeOption(i,j)">
+                <button class="btn btn-secondary close " type="button" (click)="removeOption(i,$index)">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-
+              }
               <button class="btn btn btn-secondary" type="button" (click)="addOption(i)">
                 Add Option</button>
             </div>
@@ -74,6 +77,8 @@
           </div>
         </div>
       </div>
+      }
+
     </div>
 
     <br />

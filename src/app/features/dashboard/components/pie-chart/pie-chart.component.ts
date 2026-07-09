@@ -8,7 +8,7 @@ export interface PieChartData {
 
 @Component({
   selector: 'app-pie-chart',
-  standalone: false,
+  imports: [],
   templateUrl: './pie-chart.component.html',
   styleUrl: './pie-chart.component.scss',
 })

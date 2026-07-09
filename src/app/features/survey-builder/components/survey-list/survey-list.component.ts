@@ -5,12 +5,11 @@ import { Survey } from '../../../../core/Models/survey.model';
   selector: 'app-survey-list',
   templateUrl: './survey-list.component.html',
   styleUrl: './survey-list.component.scss',
-  standalone: false
+  imports: []
 })
 export class SurveyListComponent {
 
-  @Input({ required: true })
-  surveys: Survey[] = [];
+  @Input({ required: true }) surveys: Survey[] = [];
 
   @Output()
   edit = new EventEmitter<Survey>();

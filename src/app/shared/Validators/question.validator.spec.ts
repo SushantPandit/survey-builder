@@ -29,4 +29,34 @@ describe('questionValidator', () => {
 
     expect(group.errors).toEqual({ minimumOptions: true });
   });
+
+  it('rejects empty or whitespace-only titles', () => {
+    const group = fb.group({
+      title: ['   '],
+      type: [QuestionType.MULTIPLE],
+      options: fb.array(['A', 'B']),
+    }, { validators: questionValidator() });
+
+    expect(group.errors).toEqual({ questionTitleRequired: true });
+  });
+
+  it('rejects checkbox questions with an empty option string', () => {
+    const group = fb.group({
+      title: ['Select multiple'],
+      type: [QuestionType.CHECKBOX],
+      options: fb.array(['Yes', '']),
+    }, { validators: questionValidator() });
+
+    expect(group.errors).toEqual({ minimumOptions: true });
+  });
+
+  it('accepts valid checkbox questions with two non-empty options', () => {
+    const group = fb.group({
+      title: ['Select multiple'],
+      type: [QuestionType.CHECKBOX],
+      options: fb.array(['Yes', 'No']),
+    }, { validators: questionValidator() });
+
+    expect(group.errors).toBeNull();
+  });
 });

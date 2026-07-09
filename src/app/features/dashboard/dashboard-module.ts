@@ -9,10 +9,15 @@ import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
+    
+  ],
+  imports: [
     DashboardComponent,
+    CommonModule, 
+    RouterModule, 
     BarChartComponent,
     PieChartComponent,
+    DashboardRoutingModule, 
   ],
-  imports: [CommonModule, RouterModule, DashboardRoutingModule],
 })
-export class DashboardModule {}
+export class DashboardModule { }
