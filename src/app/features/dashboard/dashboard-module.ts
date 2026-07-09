@@ -5,13 +5,14 @@ import { DashboardRoutingModule } from './dashboard-routing-module';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     BarChartComponent,
-    PieChartComponent
+    PieChartComponent,
   ],
-  imports: [CommonModule, DashboardRoutingModule],
+  imports: [CommonModule, RouterModule, DashboardRoutingModule],
 })
-export class DashboardModule { }
+export class DashboardModule {}

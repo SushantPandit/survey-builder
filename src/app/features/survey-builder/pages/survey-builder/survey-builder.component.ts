@@ -2,6 +2,7 @@ import { Component, ElementRef, inject, OnInit, signal } from '@angular/core';
 import { FormArray, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Question, QuestionType } from '../../../../core/Models/question.model';
 import { minimumOptionsValidator } from '../../../../shared/Validators/minimum-options.validator';
+import { questionValidator } from '../../../../shared/Validators/question.validator';
 import { SurveyService } from '../../../../core/Services/survey.service';
 import { Survey } from '../../../../core/Models/survey.model';
 import { SurveyStore } from '../../../../core/Services/survey.store';
@@ -14,7 +15,7 @@ import { SurveyStore } from '../../../../core/Services/survey.store';
 })
 export class SurveyBuilderComponent implements OnInit {
   private fb = inject(NonNullableFormBuilder);
-  private surveyService = inject(SurveyService);
+  surveyService = inject(SurveyService);
   private surveyStore = inject(SurveyStore);
   editingSurveyId: number | null = null;
 
@@ -50,7 +51,8 @@ export class SurveyBuilderComponent implements OnInit {
     },
       {
         validators: [
-          minimumOptionsValidator()
+          minimumOptionsValidator(),
+          questionValidator()
         ]
       });
   }

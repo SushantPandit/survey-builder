@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Survey } from '../../../../core/Models/survey.model';
 import { SurveyStore } from '../../../../core/Services/survey.store';
+import { SurveyService } from '../../../../core/Services/survey.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,6 +11,7 @@ import { SurveyStore } from '../../../../core/Services/survey.store';
 })
 export class DashboardComponent implements OnInit {
   private surveyStore = inject(SurveyStore);
+  surveyService = inject(SurveyService);
   readonly chartData = this.surveyStore.chartData;
   readonly piaChartData = this.surveyStore.pieChartData;
   

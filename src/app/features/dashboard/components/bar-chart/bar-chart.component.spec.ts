@@ -8,12 +8,13 @@ describe('BarChartComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BarChartComponent],
+      declarations: [BarChartComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(BarChartComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    component.data = [{ question: 'Q1', responses: 10 }];
+    fixture.detectChanges();
   });
 
   it('should create', () => {

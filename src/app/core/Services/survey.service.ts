@@ -3,12 +3,16 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environment';
 import { Survey } from '../Models/survey.model';
+import { AuthService } from './auth.service';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class SurveyService {
   private http = inject(HttpClient);
+  private auth = inject(AuthService);
+  
   private api = `${environment.apiUrl}/surveys`;
 
   getAll(): Observable<Survey[]> {
@@ -29,5 +33,9 @@ export class SurveyService {
 
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.api}/${id}`);
+  }
+
+  logout(){
+    this.auth.logout()
   }
 }

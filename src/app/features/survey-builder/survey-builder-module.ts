@@ -10,17 +10,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { SurveyListComponent } from './components/survey-list/survey-list.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [
-    SurveyBuilderComponent, 
-    SurveyListComponent
-  ],
+  declarations: [SurveyBuilderComponent, SurveyListComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    RouterModule,
     SurveyBuilderRoutingModule,
-
     MatInputModule,
     MatButtonModule,
     MatCardModule,
@@ -28,4 +26,4 @@ import { SurveyListComponent } from './components/survey-list/survey-list.compon
     MatCheckboxModule,
   ],
 })
-export class SurveyBuilderModule { }
+export class SurveyBuilderModule {}

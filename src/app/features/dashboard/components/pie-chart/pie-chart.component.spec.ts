@@ -8,12 +8,13 @@ describe('PieChartComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PieChartComponent],
+      declarations: [PieChartComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PieChartComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    component.data = [{ label: 'Text', value: 3 }];
+    fixture.detectChanges();
   });
 
   it('should create', () => {

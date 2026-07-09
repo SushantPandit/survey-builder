@@ -8,7 +8,6 @@ import { Survey } from '../Models/survey.model';
 export class SurveyStore {
 
   private surveyService = inject(SurveyService);
-
   // State
   readonly surveys = signal<Survey[]>([]);
   readonly selectedSurvey = signal<Survey | null>(null);
@@ -63,4 +62,6 @@ export class SurveyStore {
       }
     });
   }
+
+
 }

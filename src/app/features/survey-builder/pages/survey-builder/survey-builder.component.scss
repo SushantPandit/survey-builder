@@ -5,10 +5,15 @@
 	align-items: start;
 }
 
+.card {
+	background-color: #e3e2e6;
+}
+
 .question-card {
 	max-width: 400px;
 	flex: 1 1 calc(33.333% - 16px);
 	display: block;
+
 }
 
 .question-card mat-card {
@@ -50,4 +55,8 @@
 	.question-card {
 		flex: 1 1 100%;
 	}
+}
+
+.group-width {
+	max-width: 400px;
 }
